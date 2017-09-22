@@ -11,6 +11,12 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById("map_canvas"), opts);
+  google.maps.event.addListener(map, 'zoom_changed', function() {
+    showMarkerInfo();
+  });
+  google.maps.event.addListener(map, 'dragend', function() {
+    showMarkerInfo();
+  });
 
   var m_latlng1 = new google.maps.LatLng(35.632605,139.88132);
   var marker1 = new google.maps.Marker({
