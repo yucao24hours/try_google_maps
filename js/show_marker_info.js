@@ -21,22 +21,41 @@ function initialize() {
   var m_latlng1 = new google.maps.LatLng(35.632605,139.88132);
   var marker1 = new google.maps.Marker({
     position: m_latlng1,
-    map: map
+    map: map,
+    title: "東京ディズニーランド"
   });
 
   var m_latlng2 = new google.maps.LatLng(35.625663,139.884238);
   var marker2 = new google.maps.Marker({
     position: m_latlng2,
-    map: map
+    map: map,
+    title: "東京ディズニーシー"
   });
   markers = [marker1, marker2];
 }
 
 function showMarkerInfo() {
   var latLngBound = map.getBounds();
+  var markers_on_map = new Array();
+
   for (var i = 0; i < markers.length; i++) {
     if (latLngBound.contains(markers[i].position)) {
-      console.log("Marker"+ i +" - matched");
+      markers_on_map.push(markers[i].getTitle());
     }
+  }
+  addList(markers_on_map);
+}
+
+function addList(marker_titles) {
+  var ul = document.getElementById("markerList");
+  while (ul.firstChild) {
+    ul.removeChild(ul.firstChild);
+  }
+
+  for (var i = 0; i < marker_titles.length; i++) {
+    var li = document.createElement("li");
+    var text = document.createTextNode(marker_titles[i]);
+    li.appendChild(text);
+    ul.appendChild(li);
   }
 }
